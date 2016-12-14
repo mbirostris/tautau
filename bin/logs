@@ -1,0 +1,100 @@
+Sender: LSF System <lsfadmin@b69d7f56c5.cern.ch>
+Subject: Job 785372669: <bsub.sh> in cluster <batch> Done
+
+Job <bsub.sh> was submitted from host <lxplus022.cern.ch> by user <molszews> in cluster <batch>.
+Job was executed on host(s) <b69d7f56c5.cern.ch>, in queue <1nh>, as user <molszews> in cluster <batch>.
+</afs/cern.ch/user/m/molszews> was used as the home directory.
+</afs/cern.ch/work/m/molszews/CMSSW/tautau/WarsawAnalysis/CMSSW_7_6_3/src/SYNCH_NTUPLES/bin> was used as the working directory.
+Started at Sun Apr 10 19:47:23 2016
+Results reported on Sun Apr 10 19:48:00 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+bsub.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   14.46 sec.
+    Max Memory :                                 5.67 MB
+    Average Memory :                             5.67 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   325 MB
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   35 sec.
+    Turnaround time :                            40 sec.
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/molszews/785372669> on <b69d7f56c5.cern.ch>
+
+('data', 6456L, 6456.0)
+('wjets', 6493L, 6493.0)
+('dy', 18417L, 18417.0)
+
+real	0m12.613s
+user	0m12.722s
+sys	0m1.178s
+
+Job finished at Sun Apr 10 19:47:53 CEST 2016 on node 
+ under linux version Scientific Linux CERN SLC release 6.7 (Carbon)
+
+CERN statistics: This process used approximately : 0:00:35 KSI2K hours (35 KSI2K seconds)
+                 This process corresponds to     : 0:02:18 HS06  hours (138 HS06  seconds)
+Sender: LSF System <lsfadmin@b69d7f56c5.cern.ch>
+Subject: Job 785374258: <bsub.sh> in cluster <batch> Done
+
+Job <bsub.sh> was submitted from host <lxplus022.cern.ch> by user <molszews> in cluster <batch>.
+Job was executed on host(s) <b69d7f56c5.cern.ch>, in queue <1nh>, as user <molszews> in cluster <batch>.
+</afs/cern.ch/user/m/molszews> was used as the home directory.
+</afs/cern.ch/work/m/molszews/CMSSW/tautau/WarsawAnalysis/CMSSW_7_6_3/src/SYNCH_NTUPLES/bin> was used as the working directory.
+Started at Sun Apr 10 19:51:04 2016
+Results reported on Sun Apr 10 19:55:39 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+bsub.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   11.98 sec.
+    Max Memory :                                 5.68 MB
+    Average Memory :                             3.01 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   325 MB
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   261 sec.
+    Turnaround time :                            279 sec.
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/molszews/785374258> on <b69d7f56c5.cern.ch>
+
+('wjets', 6493L, 6493.0)
+('dy', 18417L, 18417.0)
+('data', 6456L, 6456.0)
+
+real	0m12.344s
+user	0m10.288s
+sys	0m1.068s
+
+Job finished at Sun Apr 10 19:55:25 CEST 2016 on node 
+ under linux version Scientific Linux CERN SLC release 6.7 (Carbon)
+
+CERN statistics: This process used approximately : 0:00:29 KSI2K hours (29 KSI2K seconds)
+                 This process corresponds to     : 0:01:54 HS06  hours (114 HS06  seconds)

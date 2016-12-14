@@ -1,0 +1,80 @@
+#include <iostream>
+#include <dirent.h>
+#include <stdio.h>
+#include <cstdlib>
+#include <cmath>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <string>
+#include <limits>
+#include <iomanip>
+#include <initializer_list>
+#include <array>
+#include <regex>
+#include <time.h>
+#include <algorithm>
+
+
+#include "../interface/synchtree_new.h"
+#include "../interface/compare.h"
+
+
+using std::string; 
+using std::cout; 
+using std::endl; 
+using std::vector;
+
+    constexpr static float inf = std::numeric_limits<float>::max();
+
+int main(int argc, const char *argv[]){
+
+    gROOT->ProcessLine("#include <vector>");
+
+    std::string infile = "/afs/cern.ch/work/m/molszews/CMSSW/Data/ntuple_VBF/ntuple.root";
+    std::string outfile = "/afs/cern.ch/work/m/molszews/CMSSW/Data/synch_trees_VBF/mutau.root";
+    std::string KIT = "/afs/cern.ch/work/m/molszews/CMSSW/Data/2015-sync/KIT/VBFHToTauTauM125_mt_Phys14DR_PU20bx25_13TeV_MINIAODSIM.root";
+
+    synchtree_new(infile, "m2n/ntuple", outfile);
+
+    std::vector<std::string> variables = {"pt_1", "pt_2", "run","lumi","evt","isZtt","isZmt","isZet","isZee","isZmm","isZem","isZEE","isZMM","isZLL","isFake","NUP","weight","puweight","npv","npu","rho","pt_1","phi_1","eta_1","m_1","q_1","d0_1","dZ_1","mt_1","iso_1","id_m_loose_1","id_m_medium_1","id_m_tight_1","id_m_tightnovtx_1","id_m_highpt_1","id_e_mva_nt_loose_1","id_e_cut_veto_1","id_e_cut_loose_1","id_e_cut_medium_1","id_e_cut_tight_1","trigweight_1","againstElectronLooseMVA5_1","againstElectronMediumMVA5_1","againstElectronTightMVA5_1","againstElectronVLooseMVA5_1","againstElectronVTightMVA5_1","againstMuonLoose3_1","againstMuonTight3_1","byCombinedIsolationDeltaBetaCorrRaw3Hits_1","byIsolationMVA3newDMwoLTraw_1","byIsolationMVA3oldDMwoLTraw_1","byIsolationMVA3newDMwLTraw_1","byIsolationMVA3oldDMwLTraw_1","chargedIsoPtSum_1","decayModeFinding_1","decayModeFindingNewDMs_1","neutralIsoPtSum_1","puCorrPtSum_1","pt_2","phi_2","eta_2","m_2","q_2","d0_2","dZ_2","mt_2","iso_2","id_m_loose_2","id_m_medium_2","id_m_tight_2","id_m_tightnovtx_2","id_m_highpt_2","id_e_mva_nt_loose_2","id_e_cut_veto_2","id_e_cut_loose_2","id_e_cut_medium_2","id_e_cut_tight_2","trigweight_2","againstElectronLooseMVA5_2","againstElectronMediumMVA5_2","againstElectronTightMVA5_2","againstElectronVLooseMVA5_2","againstElectronVTightMVA5_2","againstMuonLoose3_2","againstMuonTight3_2","byCombinedIsolationDeltaBetaCorrRaw3Hits_2","byIsolationMVA3newDMwoLTraw_2","byIsolationMVA3oldDMwoLTraw_2","byIsolationMVA3newDMwLTraw_2","byIsolationMVA3oldDMwLTraw_2","chargedIsoPtSum_2","decayModeFinding_2","decayModeFindingNewDMs_2","neutralIsoPtSum_2","puCorrPtSum_2","pth","m_vis","m_sv","pt_sv","eta_sv","phi_sv","met_sv","met","metphi","mvamet","mvametphi","pzetavis","pzetamiss","mvacov00","mvacov01","mvacov10","mvacov11","mjj","jdeta","njetingap","jdphi","dijetpt","dijetphi","hdijetphi","visjeteta","ptvis","nbtag","njets","njetspt20","jpt_1","jeta_1","jphi_1","jrawf_1","jmva_1","jpfid_1","jpuid_1","jcsv_1","jpt_2","jeta_2","jphi_2","jrawf_2","jmva_2","jpfid_2","jpuid_2","jcsv_2","bpt_1","beta_1","bphi_1","brawf_1","bmva_1","bpfid_1","bpuid_1","bcsv_1","bpt_2","beta_2","bphi_2","brawf_2","bmva_2","bpfid_2","bpuid_2","bcsv_2"};
+
+
+
+    for (auto& i : variables){
+        compare(outfile, "ntuple", KIT, "mt/ntuple",  i, "/afs/cern.ch/work/m/molszews/CMSSW/Data/synch_trees_VBF/"+i+"_toKITmutau.png");
+    } 
+
+
+
+//    pairselector tauptcut("taupt", 0, 50);
+//    pairselector muptcut("mupt", 50, inf);
+//    pairselector svfitcut("svfit", 50, 150);
+
+//    chain inc = tauptcut.get(tt);
+//    inc = muptcut.get(inc);
+//    inc = svfitcut.get(inc);
+//    p1.get(inc); 
+//    p2.get(inc);
+//   p3.get(inc);
+//    std::cout << "integral: " << inc.integral();
+//    p4.get(tt1);
+ //       std::cout << "dd";
+    
+//    pairvardrawer mupt("mupt", prubka + "mupt", TH1F("mupt", "mupt", 50, 0 ,200) ); mupt.get(tt);
+//    pairvardrawer taupt("taupt", prubka + "taupt", TH1F("taupt", "taupt", 50, 0 ,200) ); taupt.get(tt);
+//    pairvardrawer svfit("svfit", prubka + "svfitpt", TH1F("svfit", "svfit", 50, 0 ,200) ); svfit.get(tt);
+    
+
+
+
+
+
+    return 0;
+}
+
+
+
+
+

@@ -1,0 +1,72 @@
+#include <iostream>
+
+void synchtree_new(std::string infile, std::string tree, std::string outfile){
+ 
+
+    TFile *file = new TFile((infile).c_str());
+//    TTree *inputtree = (TTree*)file->Get(tree.c_str());
+    TTree * event = (TTree*)file->Get("m2n/event"); 
+    TTree * isZ = (TTree*)file->Get("m2n/isZ");
+    TTree * trigger = (TTree*)file->Get("m2n/trigger");
+    TNtuple* mu = (TNtuple*)file->Get("m2n/mu"); 
+    TNtuple* tau = (TNtuple*)file->Get("m2n/tau");
+    TNtuple* pair = (TNtuple*)file->Get("m2n/pair");
+    TNtuple* met = (TNtuple*)file->Get("m2n/met");
+    TNtuple* leadingjet = (TNtuple*)file->Get("m2n/leadingjet");
+    TNtuple* trailingjet = (TNtuple*)file->Get("m2n/trailingjet");
+    TNtuple* jetpair = (TNtuple*)file->Get("m2n/jetpair");
+
+    TFile *f = new TFile(outfile.c_str(),"UPDATE");
+
+    if(!(f->GetKey("htt"))){ // skip if plot already done for given file
+        
+        TNtuple *synchtree = new TNtuple("ntuple","ntuple", "run:lumi:evt:isZtt:isZmt:isZet:isZee:isZmm:isZem:isZEE:isZMM:isZLL:isFake:NUP:weight:puweight:npv:npu:rho:pt_1:phi_1:eta_1:m_1:q_1:d0_1:dZ_1:mt_1:iso_1:id_m_loose_1:id_m_medium_1:id_m_tight_1:id_m_tightnovtx_1:id_m_highpt_1:id_e_mva_nt_loose_1:id_e_cut_veto_1:id_e_cut_loose_1:id_e_cut_medium_1:id_e_cut_tight_1:trigweight_1:againstElectronLooseMVA5_1:againstElectronMediumMVA5_1:againstElectronTightMVA5_1:againstElectronVLooseMVA5_1:againstElectronVTightMVA5_1:againstMuonLoose3_1:againstMuonTight3_1:byCombinedIsolationDeltaBetaCorrRaw3Hits_1:byIsolationMVA3newDMwoLTraw_1:byIsolationMVA3oldDMwoLTraw_1:byIsolationMVA3newDMwLTraw_1:byIsolationMVA3oldDMwLTraw_1:chargedIsoPtSum_1:decayModeFinding_1:decayModeFindingNewDMs_1:neutralIsoPtSum_1:puCorrPtSum_1:pt_2:phi_2:eta_2:m_2:q_2:d0_2:dZ_2:mt_2:iso_2:id_m_loose_2:id_m_medium_2:id_m_tight_2:id_m_tightnovtx_2:id_m_highpt_2:id_e_mva_nt_loose_2:id_e_cut_veto_2:id_e_cut_loose_2:id_e_cut_medium_2:id_e_cut_tight_2:trigweight_2:againstElectronLooseMVA5_2:againstElectronMediumMVA5_2:againstElectronTightMVA5_2:againstElectronVLooseMVA5_2:againstElectronVTightMVA5_2:againstMuonLoose3_2:againstMuonTight3_2:byCombinedIsolationDeltaBetaCorrRaw3Hits_2:byIsolationMVA3newDMwoLTraw_2:byIsolationMVA3oldDMwoLTraw_2:byIsolationMVA3newDMwLTraw_2:byIsolationMVA3oldDMwLTraw_2:chargedIsoPtSum_2:decayModeFinding_2:decayModeFindingNewDMs_2:neutralIsoPtSum_2:puCorrPtSum_2:pth:m_vis:m_sv:pt_sv:eta_sv:phi_sv:met_sv:met:metphi:mvamet:mvametphi:pzetavis:pzetamiss:mvacov00:mvacov01:mvacov10:mvacov11");//:mjj:jdeta:njetingap:jdphi:dijetpt:dijetphi:hdijetphi:visjeteta:ptvis:nbtag:njets:njetspt20:jpt_1:jeta_1:jphi_1:jrawf_1:jmva_1:jpfid_1:jpuid_1:jcsv_1:jpt_2:jeta_2:jphi_2:jrawf_2:jmva_2:jpfid_2:jpuid_2:jcsv_2:bpt_1:beta_1:bphi_1:brawf_1:bmva_1:bpfid_1:bpuid_1:bcsv_1:bpt_2:beta_2:bphi_2:brawf_2:bmva_2:bpfid_2:bpuid_2:bcsv_2");
+
+
+        // define variables
+        int run = 0; event->SetBranchAddress("run", &run);
+        int lumi = 0; event->SetBranchAddress("lumi", &lumi);
+        int evt = 0;  event->SetBranchAddress("evt", &evt);
+        int nup = 0; event->SetBranchAddress("nup", &nup);
+        int npv = 0; event->SetBranchAddress("npv", &npv);
+        int npu = 0; event->SetBranchAddress("npu", &npu);
+        bool isZtt = 0; isZ->SetBranchAddress("isZtt", &isZtt);
+        bool isZmt = 0; isZ->SetBranchAddress("isZmt", &isZmt);
+        bool isZet = 0; isZ->SetBranchAddress("isZet", &isZet);
+        bool isZee = 0; isZ->SetBranchAddress("isZee", &isZee);
+        bool isZmm = 0; isZ->SetBranchAddress("isZmm", &isZmm);
+        bool isZem = 0; isZ->SetBranchAddress("isZem", &isZem);
+        bool isZEE = 0; isZ->SetBranchAddress("isZEE", &isZEE);
+        bool isZMM = 0; isZ->SetBranchAddress("isZMM", &isZMM);
+        bool isZLL = 0; isZ->SetBranchAddress("isZLL", &isZLL);
+        float pt_1 = 0; mu->SetBranchAddress("pt", &pt_1);
+
+
+        //std::cout << inputtree->GetEntries();
+        for (int i = 0; i < event->GetEntries(); i++) {
+            event->GetEntry(i);
+            isZ->GetEntry(i);
+            trigger->GetEntry(i);
+            mu->GetEntry(i);
+            tau->GetEntry(i);
+            pair->GetEntry(i);
+            met->GetEntry(i);
+
+            float fill[] = {run, lumi, evt, isZtt, isZmt, isZet, isZee, isZmm, isZem, isZEE, isZMM, isZLL, 0, nup, 0, 0, npv, npu,
+                0, pt_1};
+                
+            
+
+            synchtree->Fill(fill);
+        }
+
+        synchtree->Write();
+        delete synchtree;
+        delete f, file;
+    } 
+
+    else 
+        std::cout << "synchronizer ERROR: tree exist;";
+
+}
+

@@ -1,0 +1,46 @@
+
+#include "../interface/compare.h"
+
+void compare(std::string infile, std::string tree, std::string secinfile, std::string sectree, std::string variable, std::string outfile){
+ 
+
+    TFile *file = new TFile((infile).c_str());
+    TTree *inputtree = (TTree*)file->Get(tree.c_str());
+
+    TFile *secfile = new TFile((secinfile).c_str());
+    TTree *secinputtree = (TTree*)secfile->Get(sectree.c_str());
+
+   // TFile *f = new TFile(outfile.c_str(),"UPDATE");
+    TH1F h1 =  TH1F(variable.c_str(),variable.c_str() , 50, 30 ,0);
+    h1.SetLineColor(kBlue);
+    TH1F h2 =  TH1F(variable.c_str(),variable.c_str() , 50, 30 ,0);
+    h2.SetLineColor(kRed);
+    TCanvas c(variable.c_str(), "_", 2400, 1800);
+
+
+    float m_sv= 0;  inputtree->SetBranchAddress(variable.c_str(), &m_sv);
+    float secm_sv= 0;  secinputtree->SetBranchAddress(variable.c_str(), &secm_sv);
+ 
+
+    for (int i = 0; i < inputtree->GetEntries(); i++) {
+        inputtree->GetEntry(i);
+
+        h1.Fill(m_sv);
+    }
+
+    for (int i = 0; i < secinputtree->GetEntries(); i++) {
+        secinputtree->GetEntry(i);
+
+        h2.Fill(secm_sv);
+    }
+
+
+    h1.Draw();
+    h2.Draw("same");
+    c.Modified();
+    c.Update();
+    c.Print(outfile.c_str(), "png");
+
+    delete  file;
+}
+

@@ -1,0 +1,397 @@
+
+#include "../interface/synchtree.h"
+
+void synchtree(std::string infile, std::string tree, std::string outfile){
+ 
+
+    TFile *file = new TFile((infile).c_str());
+    TTree *inputtree = (TTree*)file->Get(tree.c_str());
+    TFile *f = new TFile(outfile.c_str(),"UPDATE");
+
+    if(!(f->GetKey("htt"))){ // skip if plot already done for given file
+        
+        TTree *synchtree = new TTree("ntuple","");
+        float run = 0; synchtree->Branch("run", &run);
+        float lumi = 0; synchtree->Branch("lumi", &lumi);
+        float evt = 0;  synchtree->Branch("evt", &evt);
+
+        float isZtt = 0; synchtree->Branch("isZtt", &isZtt);
+        float isZmt = 0; synchtree->Branch("isZmt", &isZmt);
+        float isZet = 0; synchtree->Branch("isZet", &isZet);
+        float isZee = 0; synchtree->Branch("isZee", &isZee);
+        float isZmm = 0; synchtree->Branch("isZmm", &isZmm);
+        float isZem = 0; synchtree->Branch("isZem", &isZem);
+        float isZEE = 0; synchtree->Branch("isZEE", &isZEE);
+        float isZMM = 0; synchtree->Branch("isZMM", &isZMM);
+        float isZLL = 0; synchtree->Branch("isZLL", &isZLL);
+        float isFake = 0; synchtree->Branch("isFake", &isFake);
+        float NUP = 0; synchtree->Branch("NUP", &NUP);  //nup
+
+        float weight = 0; synchtree->Branch("weight", &weight);
+        float puweight = 0; synchtree->Branch("puweight", &puweight);
+
+        float npv = 0; synchtree->Branch("npv", &npv); //npv
+        float npu = 0; synchtree->Branch("npu", &npu); //npu
+        float rho = 0; synchtree->Branch("rho", &rho); 
+
+        //Leg 1 (leading tau for tt, tau for et, mt, muon for em) 
+        float pt_1 = 0; synchtree->Branch("pt_1", &pt_1); //mupt
+        float phi_1 = 0; synchtree->Branch("phi_1", &phi_1); //muphi
+        float eta_1 = 0; synchtree->Branch("eta_1", &eta_1); //mueta
+        float m_1 = 0; synchtree->Branch("m_1", &m_1); //mum
+        float q_1 = 0; synchtree->Branch("q_1", &q_1); //muq
+        float d0_1 = 0; synchtree->Branch("d0_1", &d0_1); // mud0
+        float dZ_1 = 0; synchtree->Branch("dZ_1", &dZ_1); // mudz
+        float mt_1 = 0; synchtree->Branch("mt_1", &mt_1); // mumt
+        float iso_1 = 0; synchtree->Branch("iso_1", &iso_1); //mucombreliso
+        float id_m_loose_1 = 0; synchtree->Branch("id_m_loose_1", &id_m_loose_1); //isLooseMuon
+        float id_m_medium_1 = 0; synchtree->Branch("id_m_medium_1", &id_m_medium_1); //isMediumMuon
+        float id_m_tight_1 = 0; synchtree->Branch("id_m_tight_1", &id_m_tight_1); //isTightMuon
+        float id_m_tightnovtx_1 = 0; synchtree->Branch("id_m_tightnovtx_1", &id_m_tightnovtx_1); //isTightnovtxMuon
+        float id_m_highpt_1 = 0; synchtree->Branch("id_m_highpt_1", &id_m_highpt_1); //isHighPtMuon
+        float id_e_mva_nt_loose_1 = 0; synchtree->Branch("id_e_mva_nt_loose_1", &id_e_mva_nt_loose_1);
+        float id_e_cut_veto_1 = 0; synchtree->Branch("id_e_cut_veto_1", &id_e_cut_veto_1);
+        float id_e_cut_loose_1 = 0; synchtree->Branch("id_e_cut_loose_1", &id_e_cut_loose_1);
+        float id_e_cut_medium_1 = 0; synchtree->Branch("id_e_cut_medium_1", &id_e_cut_medium_1);
+        float id_e_cut_tight_1 = 0; synchtree->Branch("id_e_cut_tight_1", &id_e_cut_tight_1);
+        float trigweight_1 = 0; synchtree->Branch("trigweight_1", &trigweight_1);
+        float againstElectronLooseMVA5_1 = 0; synchtree->Branch("againstElectronLooseMVA5_1", &againstElectronLooseMVA5_1);//same
+        float againstElectronMediumMVA5_1 = 0; synchtree->Branch("againstElectronMediumMVA5_1", &againstElectronMediumMVA5_1); //same
+        float againstElectronTightMVA5_1 = 0; synchtree->Branch("againstElectronTightMVA5_1", &againstElectronTightMVA5_1);//same
+        float againstElectronVLooseMVA5_1 = 0; synchtree->Branch("againstElectronVLooseMVA5_1", &againstElectronVLooseMVA5_1);//same
+        float againstElectronVTightMVA5_1 = 0; synchtree->Branch("againstElectronVTightMVA5_1", &againstElectronVTightMVA5_1);//same
+        float againstMuonLoose3_1 = 0; synchtree->Branch("againstMuonLoose3_1", &againstMuonLoose3_1);//same
+        float againstMuonTight3_1 = 0; synchtree->Branch("againstMuonTight3_1", &againstMuonTight3_1);//same
+        float byCombinedIsolationDeltaBetaCorrRaw3Hits_1 = 0; synchtree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_1", &byCombinedIsolationDeltaBetaCorrRaw3Hits_1); //same
+        float byIsolationMVA3newDMwoLTraw_1 = 0; synchtree->Branch("byIsolationMVA3newDMwoLTraw_1", &byIsolationMVA3newDMwoLTraw_1);//same
+        float byIsolationMVA3oldDMwoLTraw_1 = 0; synchtree->Branch("byIsolationMVA3oldDMwoLTraw_1", &byIsolationMVA3oldDMwoLTraw_1);//same
+        float byIsolationMVA3newDMwLTraw_1 = 0; synchtree->Branch("byIsolationMVA3newDMwLTraw_1", &byIsolationMVA3newDMwLTraw_1);//same
+        float byIsolationMVA3oldDMwLTraw_1 = 0; synchtree->Branch("byIsolationMVA3oldDMwLTraw_1", &byIsolationMVA3oldDMwLTraw_1);//same
+        float chargedIsoPtSum_1 = 0; synchtree->Branch("chargedIsoPtSum_1", &chargedIsoPtSum_1); //same
+        float decayModeFinding_1 = 0; synchtree->Branch("decayModeFinding_1", &decayModeFinding_1);//same
+        float decayModeFindingNewDMs_1 = 0; synchtree->Branch("decayModeFindingNewDMs_1", &decayModeFindingNewDMs_1); //same
+        float neutralIsoPtSum_1 = 0; synchtree->Branch("neutralIsoPtSum_1", &neutralIsoPtSum_1);//same
+        float puCorrPtSum_1 = 0; synchtree->Branch("puCorrPtSum_1", &puCorrPtSum_1);//same
+
+        float pt_2 = 0; synchtree->Branch("pt_2", &pt_2);
+        float phi_2 = 0; synchtree->Branch("phi_2", &phi_2);
+        float eta_2 = 0; synchtree->Branch("eta_2", &eta_2);
+        float m_2 = 0; synchtree->Branch("m_2", &m_2);
+        float q_2 = 0; synchtree->Branch("q_2", &q_2);
+        float d0_2 = 0; synchtree->Branch("d0_2", &d0_2);
+        float dZ_2 = 0; synchtree->Branch("dZ_2", &dZ_2);
+        float mt_2 = 0; synchtree->Branch("mt_2", &mt_2);
+        float iso_2 = 0; synchtree->Branch("iso_2", &iso_2);
+        float id_m_loose_2 = 0; synchtree->Branch("id_m_loose_2", &id_m_loose_2);
+        float id_m_medium_2 = 0; synchtree->Branch("id_m_medium_2", &id_m_medium_2);
+        float id_m_tight_2 = 0; synchtree->Branch("id_m_tight_2", &id_m_tight_2);
+        float id_m_tightnovtx_2 = 0; synchtree->Branch("id_m_tightnovtx_2", &id_m_tightnovtx_2);
+        float id_m_highpt_2 = 0; synchtree->Branch("id_m_highpt_2", &id_m_highpt_2);
+        float id_e_mva_nt_loose_2 = 0; synchtree->Branch("id_e_mva_nt_loose_2", &id_e_mva_nt_loose_2);
+        float id_e_cut_veto_2 = 0; synchtree->Branch("id_e_cut_veto_2", &id_e_cut_veto_2);
+        float id_e_cut_loose_2 = 0; synchtree->Branch("id_e_cut_loose_2", &id_e_cut_loose_2);
+        float id_e_cut_medium_2 = 0; synchtree->Branch("id_e_cut_medium_2", &id_e_cut_medium_2);
+        float id_e_cut_tight_2 = 0; synchtree->Branch("id_e_cut_tight_2", &id_e_cut_tight_2);
+        float trigweight_2 = 0; synchtree->Branch("trigweight_2", &trigweight_2);
+        float againstElectronLooseMVA5_2 = 0; synchtree->Branch("againstElectronLooseMVA5_2", &againstElectronLooseMVA5_2);
+        float againstElectronMediumMVA5_2 = 0; synchtree->Branch("againstElectronMediumMVA5_2", &againstElectronMediumMVA5_2);
+        float againstElectronTightMVA5_2 = 0; synchtree->Branch("againstElectronTightMVA5_2", &againstElectronTightMVA5_2);
+        float againstElectronVLooseMVA5_2 = 0; synchtree->Branch("againstElectronVLooseMVA5_2", &againstElectronVLooseMVA5_2);
+        float againstElectronVTightMVA5_2 = 0; synchtree->Branch("againstElectronVTightMVA5_2", &againstElectronVTightMVA5_2);
+        float againstMuonLoose3_2 = 0; synchtree->Branch("againstMuonLoose3_2", &againstMuonLoose3_2);
+        float againstMuonTight3_2 = 0; synchtree->Branch("againstMuonTight3_2", &againstMuonTight3_2);
+        float byCombinedIsolationDeltaBetaCorrRaw3Hits_2 = 0; synchtree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_2", &byCombinedIsolationDeltaBetaCorrRaw3Hits_2);
+        float byIsolationMVA3newDMwoLTraw_2 = 0; synchtree->Branch("byIsolationMVA3newDMwoLTraw_2", &byIsolationMVA3newDMwoLTraw_2);
+        float byIsolationMVA3oldDMwoLTraw_2 = 0; synchtree->Branch("byIsolationMVA3oldDMwoLTraw_2", &byIsolationMVA3oldDMwoLTraw_2);
+        float byIsolationMVA3newDMwLTraw_2 = 0; synchtree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
+        float byIsolationMVA3oldDMwLTraw_2 = 0; synchtree->Branch("byIsolationMVA3oldDMwLTraw_2", &byIsolationMVA3oldDMwLTraw_2);
+        float chargedIsoPtSum_2 = 0; synchtree->Branch("chargedIsoPtSum_2", &chargedIsoPtSum_2);
+        float decayModeFinding_2 = 0; synchtree->Branch("decayModeFinding_2", &decayModeFinding_2);
+        float decayModeFindingNewDMs_2 = 0; synchtree->Branch("decayModeFindingNewDMs_2", &decayModeFindingNewDMs_2);
+        float neutralIsoPtSum_2 = 0; synchtree->Branch("neutralIsoPtSum_2", &neutralIsoPtSum_2);
+        float puCorrPtSum_2 = 0; synchtree->Branch("puCorrPtSum_2", &puCorrPtSum_2);
+
+        float pth = 0; synchtree->Branch("pth", &pth); //same
+        float m_vis = 0; synchtree->Branch("m_vis", &m_vis);
+        float m_sv = 0; synchtree->Branch("m_sv", &m_sv); //svfit
+        float pt_sv = 0; synchtree->Branch("pt_sv", &pt_sv);
+        float eta_sv = 0; synchtree->Branch("eta_sv", &eta_sv);
+        float phi_sv = 0; synchtree->Branch("phi_sv", &phi_sv);
+        float met_sv = 0; synchtree->Branch("met_sv", &met_sv);
+
+        float met = 0; synchtree->Branch("met", &met);
+        float metphi = 0; synchtree->Branch("metphi", &metphi);
+        float mvamet = 0; synchtree->Branch("mvamet", &mvamet);
+        float mvametphi = 0; synchtree->Branch("mvametphi", &mvametphi);
+        float pzetavis = 0; synchtree->Branch("pzetavis", &pzetavis);
+        float pzetamiss = 0; synchtree->Branch("pzetamiss", &pzetamiss);
+        float mvacov00 = 0; synchtree->Branch("mvacov00", &mvacov00);//same
+        float mvacov01 = 0; synchtree->Branch("mvacov01", &mvacov01);//same
+        float mvacov10 = 0; synchtree->Branch("mvacov10", &mvacov10);//same
+        float mvacov11 = 0; synchtree->Branch("mvacov11", &mvacov11);//same
+
+        float mjj = 0; synchtree->Branch("mjj", &mjj); //same
+        float jdeta = 0; synchtree->Branch("jdeta", &jdeta); //deta
+        float njetingap = 0; synchtree->Branch("njetingap", &njetingap);//same
+        float jdphi = 0; synchtree->Branch("jdphi", &jdphi);//dphi
+        float dijetpt = 0; synchtree->Branch("dijetpt", &dijetpt); //ptjj
+        float dijetphi = 0; synchtree->Branch("dijetphi", &dijetphi); //phijj
+        float hdijetphi = 0; synchtree->Branch("hdijetphi", &hdijetphi);//same
+        float visjeteta = 0; synchtree->Branch("visjeteta", &visjeteta);//seme
+        float ptvis = 0; synchtree->Branch("ptvis", &ptvis);//same
+
+        float nbtag = 0; synchtree->Branch("nbtag", &nbtag);
+        float njets = 0; synchtree->Branch("njets", &njets);
+        float njetspt20 = 0; synchtree->Branch("njetspt20", &njetspt20);
+
+        float jpt_1 = 0; synchtree->Branch("jpt_1", &jpt_1); //jetpt
+        float jeta_1 = 0; synchtree->Branch("jeta_1", &jeta_1); //jeteta
+        float jphi_1 = 0; synchtree->Branch("jphi_1", &jphi_1); //jetphi
+        float jrawf_1 = 0; synchtree->Branch("jrawf_1", &jrawf_1);//jecfactor
+        float jmva_1 = 0; synchtree->Branch("jmva_1", &jmva_1);//pujetid
+        float jpfid_1 = 0; synchtree->Branch("jpfid_1", &jpfid_1);//jetlooseID
+        float jpuid_1 = 0; synchtree->Branch("jpuid_1", &jpuid_1);//pujetetaid
+        float jcsv_1 = 0; synchtree->Branch("jcsv_1", &jcsv_1); //jetcsvtag
+
+        float jpt_2 = 0; synchtree->Branch("jpt_2", &jpt_2);
+        float jeta_2 = 0; synchtree->Branch("jeta_2", &jeta_2);
+        float jphi_2 = 0; synchtree->Branch("jphi_2", &jphi_2);
+        float jrawf_2 = 0; synchtree->Branch("jrawf_2", &jrawf_2);
+        float jmva_2 = 0; synchtree->Branch("jmva_2", &jmva_2);
+        float jpfid_2 = 0; synchtree->Branch("jpfid_2", &jpfid_2);
+        float jpuid_2 = 0; synchtree->Branch("jpuid_2", &jpuid_2);
+        float jcsv_2 = 0; synchtree->Branch("jcsv_2", &jcsv_2);
+ 
+        float bpt_1 = 0; synchtree->Branch("bpt_1", &bpt_1);
+        float beta_1 = 0; synchtree->Branch("beta_1", &beta_1);
+        float bphi_1 = 0; synchtree->Branch("bphi_1", &bphi_1);
+        float brawf_1 = 0; synchtree->Branch("brawf_1", &brawf_1);
+        float bmva_1 = 0; synchtree->Branch("bmva_1", &bmva_1);
+        float bpfid_1 = 0; synchtree->Branch("bpfid_1", &bpfid_1);
+        float bpuid_1 = 0; synchtree->Branch("bpuid_1", &bpuid_1);
+        float bcsv_1 = 0; synchtree->Branch("bcsv_1", &bcsv_1);
+
+        float bpt_2 = 0; synchtree->Branch("bpt_2", &bpt_2);
+        float beta_2 = 0; synchtree->Branch("beta_2", &beta_2);
+        float bphi_2 = 0; synchtree->Branch("bphi_2", &bphi_2);
+        float brawf_2 = 0; synchtree->Branch("brawf_2", &brawf_2);
+        float bmva_2 = 0; synchtree->Branch("bmva_2", &bmva_2);
+        float bpfid_2 = 0; synchtree->Branch("bpfid_2", &bpfid_2);
+        float bpuid_2 = 0; synchtree->Branch("bpuid_2", &bpuid_2);
+        float bcsv_2 = 0; synchtree->Branch("bcsv_2", &bcsv_2);
+
+
+
+
+        // define variables
+        unsigned short paircount = 0;  inputtree->SetBranchAddress("paircount", &paircount);
+        
+        float run_ = 0; inputtree->SetBranchAddress("run", &run_);
+        float lumi_ = 0; inputtree->SetBranchAddress("lumi", &lumi_);
+        float evt_ = 0;  inputtree->SetBranchAddress("evt", &evt_);
+        bool isZtt_ = 0; inputtree->SetBranchAddress("isZtt", &isZtt_);
+        bool isZmt_ = 0; inputtree->SetBranchAddress("isZmt", &isZmt_);
+        bool isZet_ = 0; inputtree->SetBranchAddress("isZet", &isZet_);
+        bool isZee_ = 0; inputtree->SetBranchAddress("isZee", &isZee_);
+        bool isZmm_ = 0; inputtree->SetBranchAddress("isZmm", &isZmm_);
+        bool isZem_ = 0; inputtree->SetBranchAddress("isZem", &isZem_);
+        bool isZEE_ = 0; inputtree->SetBranchAddress("isZEE", &isZEE_);
+        bool isZMM_ = 0; inputtree->SetBranchAddress("isZMM", &isZMM_);
+        bool isZLL_ = 0; inputtree->SetBranchAddress("isZLL", &isZLL_);
+        int nup_ = 0; inputtree->SetBranchAddress("nup", &nup_);
+
+        float npv_ = 0; inputtree->SetBranchAddress("npv", &npv_);
+        float npu_ = 0; inputtree->SetBranchAddress("npu", &npu_);
+
+        std::vector<float> *taupt_ = 0;  inputtree->SetBranchAddress("taupt", &taupt_);
+        std::vector<float> *tauphi_ = 0;  inputtree->SetBranchAddress("tauphi", &tauphi_);
+        std::vector<float> *taueta_ = 0;  inputtree->SetBranchAddress("taueta", &taueta_);
+        std::vector<float> *taum_ = 0;  inputtree->SetBranchAddress("taum", &taum_);
+        std::vector<float> *tauq_ = 0;  inputtree->SetBranchAddress("tauq", &tauq_);
+        std::vector<float> *taumt_ = 0;  inputtree->SetBranchAddress("taumt", &taumt_);
+
+        std::vector<float> *againstElectronLooseMVA5_ = 0;  inputtree->SetBranchAddress("againstElectronLooseMVA5", &againstElectronLooseMVA5_);
+        std::vector<float> *againstElectronMediumMVA5_ = 0;  inputtree->SetBranchAddress("againstElectronMediumMVA5", &againstElectronMediumMVA5_);
+        std::vector<float> *againstElectronTightMVA5_ = 0;  inputtree->SetBranchAddress("againstElectronTightMVA5", &againstElectronTightMVA5_);
+        std::vector<float> *againstElectronVLooseMVA5_ = 0;  inputtree->SetBranchAddress("againstElectronVLooseMVA5", &againstElectronVLooseMVA5_);
+        std::vector<float> *againstElectronVTightMVA5_ = 0;  inputtree->SetBranchAddress("againstElectronVTightMVA5", &againstElectronVTightMVA5_);
+        std::vector<float> *againstMuonLoose3_ = 0;  inputtree->SetBranchAddress("againstMuonLoose3", &againstMuonLoose3_);
+        std::vector<float> *againstMuonTight3_ = 0;  inputtree->SetBranchAddress("againstMuonTight3", &againstMuonTight3_);
+        std::vector<float> *byCombinedIsolationDeltaBetaCorrRaw3Hits_ = 0;  inputtree->SetBranchAddress("byCombinedIsolationDeltaBetaCorrRaw3Hits", &byCombinedIsolationDeltaBetaCorrRaw3Hits_);
+        std::vector<float> *byIsolationMVA3newDMwoLTraw_ = 0;  inputtree->SetBranchAddress("byIsolationMVA3newDMwoLTraw", &byIsolationMVA3newDMwoLTraw_);
+        std::vector<float> *byIsolationMVA3oldDMwoLTraw_ = 0;  inputtree->SetBranchAddress("byIsolationMVA3oldDMwoLTraw", &byIsolationMVA3oldDMwoLTraw_);
+        std::vector<float> *byIsolationMVA3newDMwLTraw_ = 0;  inputtree->SetBranchAddress("byIsolationMVA3newDMwLTraw", &byIsolationMVA3newDMwLTraw_);
+        std::vector<float> *byIsolationMVA3oldDMwLTraw_ = 0;  inputtree->SetBranchAddress("byIsolationMVA3oldDMwLTraw", &byIsolationMVA3oldDMwLTraw_);
+        std::vector<float> *chargedIsoPtSum_ = 0;  inputtree->SetBranchAddress("chargedIsoPtSum", &chargedIsoPtSum_);
+        std::vector<float> *decayModeFinding_ = 0;  inputtree->SetBranchAddress("decayModeFinding", &decayModeFinding_);
+        std::vector<float> *decayModeFindingNewDMs_ = 0;  inputtree->SetBranchAddress("decayModeFindingNewDMs", &decayModeFindingNewDMs_);
+        std::vector<float> *neutralIsoPtSum_ = 0;  inputtree->SetBranchAddress("neutralIsoPtSum", &neutralIsoPtSum_);
+        std::vector<float> *puCorrPtSum_ = 0;  inputtree->SetBranchAddress("puCorrPtSum", &puCorrPtSum_);
+
+        std::vector<float> *mupt_ = 0;  inputtree->SetBranchAddress("mupt", &mupt_);
+        std::vector<float> *muphi_ = 0;  inputtree->SetBranchAddress("muphi", &muphi_);
+        std::vector<float> *mueta_ = 0;  inputtree->SetBranchAddress("mueta", &mueta_);
+        std::vector<float> *mum_ = 0;  inputtree->SetBranchAddress("mum", &mum_);
+        std::vector<float> *muq_ = 0;  inputtree->SetBranchAddress("muq", &muq_);
+        std::vector<float> *mud0_ = 0;  inputtree->SetBranchAddress("mud0", &mud0_);
+        std::vector<float> *mudz_ = 0;  inputtree->SetBranchAddress("mudz", &mudz_);
+        std::vector<float> *mumt_ = 0;  inputtree->SetBranchAddress("mumt", &mumt_);
+        std::vector<float> *muiso_ = 0;  inputtree->SetBranchAddress("muiso", &muiso_);
+        std::vector<float> *isLooseMuon_ = 0;  inputtree->SetBranchAddress("isLooseMuon", &isLooseMuon_);
+        std::vector<float> *isTightMuon_ = 0;  inputtree->SetBranchAddress("isTightMuon", &isTightMuon_);
+        std::vector<float> *isHighPtMuon_ = 0;  inputtree->SetBranchAddress("isHighPtMuon", &isHighPtMuon_);
+        std::vector<float> *isMediumMuon_ = 0;  inputtree->SetBranchAddress("isMediumMuon", &isMediumMuon_);
+        std::vector<float> *isTightnovtxMuon_ = 0;  inputtree->SetBranchAddress("isTightnovtxMuon", &isTightnovtxMuon_);
+
+//            std::vector<float> *pth_ = 0;  inputtree->SetBranchAddress("pth", &pth_);
+        std::vector<float> *svfit_ = 0;  inputtree->SetBranchAddress("svfit", &svfit_);
+
+        std::vector<float> *mvacov00_ = 0;  inputtree->SetBranchAddress("mvacov00", &mvacov00_);
+        std::vector<float> *mvacov01_ = 0;  inputtree->SetBranchAddress("mvacov01", &mvacov01_);
+        std::vector<float> *mvacov10_ = 0;  inputtree->SetBranchAddress("mvacov10", &mvacov10_);
+        std::vector<float> *mvacov11_ = 0;  inputtree->SetBranchAddress("mvacov11", &mvacov11_);
+
+        float mjj_ = 0;  inputtree->SetBranchAddress("mjj", &mjj_);
+        float jdeta_ = 0;  inputtree->SetBranchAddress("deta", &jdeta_);
+
+        std::vector<float> *jetpt_= 0;  inputtree->SetBranchAddress("jetpt", &jetpt_);
+        std::vector<float> *jeteta_= 0;  inputtree->SetBranchAddress("jeteta", &jeteta_);
+        std::vector<float> *jetphi_= 0;  inputtree->SetBranchAddress("jetphi", &jetphi_);
+        std::vector<float> *bjet_= 0;  inputtree->SetBranchAddress("bjet", &bjet_);
+        std::vector<float> *jecfactor_= 0;  inputtree->SetBranchAddress("jecfactor", &jecfactor_);
+        std::vector<float> *pujetid_= 0;  inputtree->SetBranchAddress("pujetid", &pujetid_);
+        std::vector<float> *jetlooseID_= 0;  inputtree->SetBranchAddress("jetlooseID", &jetlooseID_);
+        std::vector<float> *pujetetaid_= 0;  inputtree->SetBranchAddress("pujetetaid", &pujetetaid_);
+        std::vector<float> *jetcsvtag_= 0;  inputtree->SetBranchAddress("jetcsvtag", &jetcsvtag_);
+ 
+
+        //std::cout << inputtree->GetEntries();
+        for (int i = 0; i < inputtree->GetEntries(); i++) {
+            inputtree->GetEntry(i);
+
+            run = run_;
+            lumi = lumi_;
+            evt = evt_;
+            //std::cout << evt << std::endl;
+            isZtt=isZtt_;
+            isZmt=isZmt_;
+            isZet=isZet_;
+            isZee=isZee_;
+            isZmm=isZmm_;
+            isZem=isZem_;
+            isZEE=isZEE_;
+            isZMM= isZMM_;
+            isZLL=isZLL_;
+
+            NUP= nup_; 
+            npv = npv_;
+            npu = npu_;
+
+            mjj = mjj_;
+            jdeta = jdeta_;
+
+            jpt_1 = (*jetpt_)[0];      
+            jpt_2 = (*jetpt_)[1];
+            jeta_1 = (*jeteta_)[0];      
+            jeta_2 = (*jeteta_)[1];
+            jphi_1 = (*jetphi_)[0];      
+            jphi_2 = (*jetphi_)[1];
+            jrawf_1 = (*jecfactor_)[0];      
+            jrawf_2 = (*jecfactor_)[1];
+            jmva_1 = (*pujetid_)[0];
+            jmva_2 = (*pujetid_)[1];
+            jpfid_1 = (*jetlooseID_)[0];
+            jpfid_2 = (*jetlooseID_)[1];
+            jpuid_1 = (*pujetetaid_)[0];
+            jpuid_2 = (*pujetetaid_)[1];
+            jcsv_1 = (*jetcsvtag_)[0];
+            jcsv_2 = (*jetcsvtag_)[1];
+
+            nbtag = 0; njets = 0; njetspt20 = 0;
+            for(std::vector<int>::size_type i = 0; i != (*bjet_).size(); i++) {
+                 nbtag+=(*bjet_)[i];
+                 if((*jetpt_)[i] > 30) njets+=1;
+                 njetspt20+=1;
+                 if((*bjet_)[i] && nbtag == 1){
+                    bpt_1 = (*jetpt_)[i];      
+                    beta_1 = (*jeteta_)[i];      
+                    bphi_1 = (*jetphi_)[i];      
+                    brawf_1 = (*jecfactor_)[i];      
+                    bmva_1 = (*pujetid_)[i];
+                    bpfid_1 = (*jetlooseID_)[i];
+                    bpuid_1 = (*pujetetaid_)[i];
+                    bcsv_1 = (*jetcsvtag_)[i];
+                 }
+                 if((*bjet_)[i] && nbtag == 2){
+                    bpt_2 = (*jetpt_)[i];      
+                    beta_2 = (*jeteta_)[i];      
+                    bphi_2 = (*jetphi_)[i];      
+                    brawf_2 = (*jecfactor_)[i];      
+                    bmva_2 = (*pujetid_)[i];
+                    bpfid_2 = (*jetlooseID_)[i];
+                    bpuid_2 = (*pujetetaid_)[i];
+                    bcsv_2 = (*jetcsvtag_)[i];
+                 }
+            }
+
+            pt_1 = (*taupt_)[0];
+            phi_1 = (*tauphi_)[0];
+            eta_1 = (*taueta_)[0];
+            m_1 = (*taum_)[0];
+            q_1 = (*tauq_)[0];
+            mt_1 = (*taumt_)[0];
+
+            againstElectronLooseMVA5_1 = (*againstElectronLooseMVA5_)[0];
+            againstElectronMediumMVA5_1 = (*againstElectronMediumMVA5_)[0];
+            againstElectronTightMVA5_1 = (*againstElectronTightMVA5_)[0];
+            againstElectronVLooseMVA5_1 = (*againstElectronVLooseMVA5_)[0];
+            againstElectronVTightMVA5_1 = (*againstElectronVTightMVA5_)[0];
+            againstMuonLoose3_1 = (*againstMuonLoose3_)[0];
+            againstMuonTight3_1 = (*againstMuonTight3_)[0];
+            byCombinedIsolationDeltaBetaCorrRaw3Hits_1 = (*byCombinedIsolationDeltaBetaCorrRaw3Hits_)[0];
+            byIsolationMVA3newDMwoLTraw_1 = (*byIsolationMVA3newDMwoLTraw_)[0];
+            byIsolationMVA3oldDMwoLTraw_1 = (*byIsolationMVA3oldDMwoLTraw_)[0];
+            byIsolationMVA3newDMwLTraw_1 = (*byIsolationMVA3newDMwLTraw_)[0];
+            byIsolationMVA3oldDMwLTraw_1 = (*byIsolationMVA3oldDMwLTraw_)[0];
+            chargedIsoPtSum_1 = (*chargedIsoPtSum_)[0];
+            decayModeFinding_1 = (*decayModeFinding_)[0];
+            decayModeFindingNewDMs_1 = (*decayModeFindingNewDMs_)[0];
+            neutralIsoPtSum_1 = (*neutralIsoPtSum_)[0];
+            puCorrPtSum_1 = (*puCorrPtSum_)[0];
+/*
+            pt_2 = (*mupt_)[0];
+            phi_2 = (*muphi_)[0];
+            eta_2 = (*mueta_)[0];
+            m_2 = (*mum_)[0];
+            q_2 = (*muq_)[0];
+            d0_2 = (*mud0_)[0];
+            dZ_2 = (*mudz_)[0];
+            mt_2 = (*mumt_)[0];
+            iso_2 = (*muiso_)[0];
+            id_m_loose_2 = (*isLooseMuon_)[0];
+            id_m_medium_2 = (*isMediumMuon_)[0];
+            id_m_tight_2 = (*isTightMuon_)[0];
+            id_m_tightnovtx_2 = (*isTightnovtxMuon_)[0];
+            id_m_highpt_2 = (*isHighPtMuon_)[0];
+*/
+     //       pth = (*pth_)[0];
+            m_sv = (*svfit_)[0];
+
+            mvacov00 = (*mvacov00_)[0];
+            mvacov01 = (*mvacov01_)[0];
+            mvacov10 = (*mvacov10_)[0];
+            mvacov11 = (*mvacov11_)[0];
+        
+            synchtree->Fill();
+        }
+
+        synchtree->Write();
+        delete synchtree;
+        delete f, file;
+    } 
+
+    else 
+        std::cout << "synchronizer ERROR: tree exist;";
+
+}
+
