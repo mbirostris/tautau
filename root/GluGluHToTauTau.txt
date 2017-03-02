@@ -1,8 +1,0 @@
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_8.root; entris: 3298; genweightsum: 3298.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_3.root; entris: 8713; genweightsum: 8713.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_5.root; entris: 9792; genweightsum: 9792.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_4.root; entris: 9439; genweightsum: 9439.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_1.root; entris: 9730; genweightsum: 9730.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_2.root; entris: 9762; genweightsum: 9762.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_7.root; entris: 8981; genweightsum: 8981.0
-GluGluHToTauTaufile:/scratch/olszew/data/GluGluHToTauTauM12513TeV_v1/ntuple_6.root; entris: 9129; genweightsum: 9129.0

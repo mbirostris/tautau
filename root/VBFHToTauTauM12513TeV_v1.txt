@@ -1,8 +1,0 @@
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_1.root; entris: 11928; genweightsum: 44636.6824424
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_7.root; entris: 10486; genweightsum: 39214.9503582
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_8.root; entris: 12165; genweightsum: 45419.2390761
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_2.root; entris: 13373; genweightsum: 49979.7844343
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_3.root; entris: 13575; genweightsum: 50743.6196175
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_5.root; entris: 13599; genweightsum: 50855.9483209
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_4.root; entris: 13899; genweightsum: 51911.8381329
-VBFHToTauTauM12513TeV_v1file:/scratch/olszew/data/VBFHToTauTauM12513TeV_v1/ntuple_6.root; entris: 15303; genweightsum: 57206.2643533

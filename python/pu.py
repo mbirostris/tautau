@@ -103,19 +103,24 @@ for i in nazwy:
 
 
 weight  = []
-puDataFile = TFile('./utils/Data_Pileup_2015D_Feb02.root')
-puMCFile = TFile('./utils/MC_Fall15_PU25_V1.root')
+puDataFile = TFile('/scratch/olszew/data/pileup/MyDataPileupHistogram.root')
+puMCFile = TFile('/scratch/olszew/data/pileup/MC_Moriond17_PU25ns_V1.root')
+pucheck = TFile('/scratch/olszew/data/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root')
 hPUData = puDataFile.Get('pileup')
 hPUSample = puMCFile.Get('pileup')
+hpucheck = pucheck.Get('pileup')
 
 hPUData.Scale(1/hPUData.Integral(0,hPUData.GetNbinsX()+1), "width");
 hPUSample.Scale(1/hPUSample.Integral(0,hPUSample.GetNbinsX()+1), "width");
 hPUData.Divide(hPUSample);
 hPUData.SetBinContent(0,1.0);
 hPUData.SetBinContent(hPUData.GetNbinsX()+1,1.0);
-for ii in xrange(60):
+for ii in xrange(80):
     jj = hPUData.FindBin(ii)
     weight.append(hPUData.GetBinContent(jj))
+    jc = hpucheck.FindBin(ii)
+    #print ii, hPUData.GetBinContent(jj), hpucheck.GetBinContent(jc)
+
 #print weight;
 
 '''
